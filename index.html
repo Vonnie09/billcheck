@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BillCheck</title>
+  <meta name="description" content="A simple bill and installment tracker. Demo app: data stays in your browser.">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <script>
+    // Dark mode by default; use the visitor's saved choice if they switched. Runs before paint.
+    (function () {
+      let t = null;
+      try { t = localStorage.getItem('paybills.theme'); } catch (e) {}
+      document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+  <div class="app">
+    <!-- components/header.js -->
+    <header class="topbar" id="header"></header>
+
+    <!-- components/nextPayment.js -->
+    <section id="hero" aria-live="polite"></section>
+
+    <!-- components/summary.js -->
+    <section class="summary card" id="summary" aria-label="Summary"></section>
+
+    <nav class="tabs" id="tabs" role="tablist">
+      <button role="tab" class="tab" id="tab-all" data-action="tab" data-tab="all" aria-selected="true" aria-controls="panel-all">
+        All Bills <span class="count" id="countAll"></span>
+      </button>
+      <button role="tab" class="tab" id="tab-next" data-action="tab" data-tab="next" aria-selected="false" aria-controls="panel-next">
+        Next Bill <span class="count" id="countNext"></span>
+      </button>
+      <button role="tab" class="tab" id="tab-ongoing" data-action="tab" data-tab="ongoing" aria-selected="false" aria-controls="panel-ongoing">
+        Ongoing Bills <span class="count" id="countOngoing"></span>
+      </button>
+      <button role="tab" class="tab" id="tab-done" data-action="tab" data-tab="done" aria-selected="false" aria-controls="panel-done">
+        Done Bills <span class="count" id="countDone"></span>
+      </button>
+      <button role="tab" class="tab tab--trash" id="tab-trash" data-action="tab" data-tab="trash" aria-selected="false" aria-controls="panel-trash" aria-label="Trash" title="Trash">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+        <span class="count" id="countTrash" hidden></span>
+      </button>
+    </nav>
+
+    <!-- One panel per tab; each is drawn by a file in /pages -->
+    <main>
+      <section id="panel-all" role="tabpanel" aria-labelledby="tab-all">
+        <div class="grid" id="billGrid"></div>          <!-- pages/allBills.js -->
+      </section>
+      <section id="panel-next" role="tabpanel" aria-labelledby="tab-next" hidden>
+        <div id="timeline"></div>                       <!-- pages/nextBill.js -->
+      </section>
+      <section id="panel-ongoing" role="tabpanel" aria-labelledby="tab-ongoing" hidden>
+        <div class="grid" id="ongoingGrid"></div>       <!-- pages/ongoingBills.js -->
+      </section>
+      <section id="panel-done" role="tabpanel" aria-labelledby="tab-done" hidden>
+        <div class="grid" id="doneGrid"></div>          <!-- pages/doneBills.js -->
+      </section>
+      <section id="panel-trash" role="tabpanel" aria-labelledby="tab-trash" hidden>
+        <div id="trashList"></div>                      <!-- pages/trash.js -->
+      </section>
+    </main>
+  </div>
+
+  <button class="fab" data-action="add" type="button" aria-label="Add a bill">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+  </button>
+
+  <!-- Popups (bill form, confirm, overdue list, image viewer) and the toast are added by /components -->
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

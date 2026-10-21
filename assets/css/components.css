@@ -1,0 +1,214 @@
+/* Styles for each component (see the /components folder) */
+
+/* Card base */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Next payment (components/nextPayment.js) */
+.next {
+  padding: 20px;
+  margin-bottom: 12px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: var(--hero);
+  border-color: var(--hero);
+  color: var(--hero-text);
+}
+.next-label { font-size: 13px; color: var(--hero-muted); }
+.next-title { font-size: 20px; font-weight: 600; margin-top: 2px; }
+.next-amount { font-size: 28px; font-weight: 700; margin: 4px 0; font-variant-numeric: tabular-nums; }
+.next-meta { font-size: 13px; color: var(--hero-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.next .btn-primary { background: var(--accent); color: #101422; }
+
+.next-side { display: flex; flex-direction: column; gap: 10px; min-width: 210px; }
+.next-due {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .18);
+}
+.next-due.is-overdue { border-color: #FF7A85; box-shadow: inset 4px 0 0 #FF7A85; }
+.next-due-lbl { font-size: 12px; color: var(--hero-muted); text-transform: uppercase; letter-spacing: .06em; }
+.next-due-date { font-size: 20px; font-weight: 700; line-height: 1.2; color: var(--hero-text); }
+
+/* Status pill */
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 500;
+  background: var(--surface-2); color: var(--muted);
+  white-space: nowrap;
+}
+.pill.is-overdue { background: var(--red-soft); color: var(--red); }
+.pill.is-soon { background: var(--accent-soft); color: var(--accent-ink); }
+.pill.is-paid { background: var(--green-soft); color: var(--green); }
+
+/* Summary (components/summary.js) */
+.summary {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.summary > div { padding: 12px 16px; }
+.summary > div + div { border-left: 1px solid var(--border); }
+.summary-lbl { font-size: 12px; color: var(--muted); }
+.summary-val { font-weight: 600; font-variant-numeric: tabular-nums; }
+.summary-val.is-red { color: var(--red); }
+.summary > .is-alert {
+  background: var(--red-alert, var(--red-soft));
+  box-shadow: inset 4px 0 0 var(--red);
+}
+.summary > .is-alert .summary-lbl { color: var(--red); font-weight: 600; }
+.summary-link {
+  border: 0; background: none; padding: 0; margin-top: 2px;
+  font-size: 12.5px; font-weight: 600; color: var(--accent-ink);
+}
+.summary-link:hover { text-decoration: underline; }
+.summary-note { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+/* Bill card (components/billCard.js) */
+.bill {
+  padding: 16px;
+  display: flex; flex-direction: column;
+  container-type: inline-size; /* lets the installment boxes adapt to the card's width */
+}
+.bill-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.bill-title { font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.bill-amount { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bill-plan { font-size: 13px; color: var(--muted); }
+.bill-meta { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; min-height: 28px; margin-top: 4px; }
+.bill.is-done .bill-title, .bill.is-done .bill-amount { color: var(--muted); }
+.bill.is-done .bill-title { text-decoration: line-through; text-decoration-thickness: 2px; }
+
+.thumb {
+  width: 28px; height: 28px; padding: 0; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 6px; background: #fff;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Installment boxes */
+/* Pinned to the bottom of the card so boxes line up across a row */
+.parts {
+  display: grid;
+  grid-template-columns: repeat(var(--cols-narrow), minmax(0, 1fr));
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+@container (min-width: 380px) {
+  .parts { grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+}
+.parts + .progress { margin-top: 12px; }
+.part {
+  display: flex; flex-direction: column; align-items: flex-start;
+  padding: 6px 8px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface);
+  text-align: left; font-size: 12px; line-height: 1.35;
+}
+.part:hover { border-color: var(--accent); }
+.part-n { color: var(--muted); }
+.part-date { font-weight: 500; }
+.part.is-next { border-color: var(--accent); background: var(--next-bg); }
+.part.is-overdue { border-color: var(--red); background: var(--red-soft); color: var(--red); }
+.part.is-overdue .part-n { color: var(--red); }
+.part.is-paid { border-color: transparent; background: var(--green-soft); color: var(--green); }
+.part.is-paid .part-n { color: var(--green); }
+.part--wide { flex-direction: row; justify-content: space-between; align-items: center; padding: 10px 12px; font-size: 13px; }
+
+.bill-foot { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.progress { height: 4px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--accent); }
+
+/* Payment rows (components/paymentRow.js, pages/nextBill.js, pages/trash.js) */
+.group-title { font-size: 13px; font-weight: 600; color: var(--muted); margin: 18px 0 8px; }
+.group-title:first-child { margin-top: 4px; }
+.group-title.is-red { color: var(--red); }
+.list { list-style: none; margin: 0; padding: 0; }
+.row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto auto;
+  align-items: center; gap: 12px;
+  padding: 12px 14px;
+}
+.row + .row { border-top: 1px solid var(--border); }
+.row-date { text-align: center; line-height: 1.15; }
+.row-date b { display: block; font-size: 18px; }
+.row-date span { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+.row-title { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-sub { font-size: 12px; color: var(--muted); }
+.row-right { text-align: right; }
+.row-amt { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.trash-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  margin-bottom: 10px; font-size: 13px; color: var(--muted);
+}
+.trash-row { grid-template-columns: minmax(0, 1fr) auto auto; }
+.trash-actions { display: flex; gap: 6px; }
+
+/* Modals (billForm, confirmDialog, overdueDialog, imageViewer) */
+.modal {
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 20px;
+  border: 1px solid var(--border); border-radius: 14px;
+  background: var(--surface); color: var(--text);
+  box-shadow: 0 20px 50px rgba(16, 20, 34, .25);
+}
+.modal--sm { width: min(400px, calc(100vw - 32px)); }
+.modal::backdrop { background: rgba(16, 20, 34, .55); }
+.modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 14px; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; }
+.modal-head h2 { margin: 0; }
+.modal-head + .field { margin-top: 14px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+
+.modal-total {
+  display: flex; justify-content: space-between;
+  padding: 12px 2px 0; font-weight: 600;
+}
+.modal-total span:last-child { color: var(--red); }
+#overdueList .list { margin-top: 12px; }
+
+/* Image upload (components/uploadField.js) */
+.upload { border: 1px dashed var(--border); border-radius: 8px; }
+.upload.is-drag { border-color: var(--accent); background: var(--next-bg); }
+.upload-empty { display: block; padding: 14px; text-align: center; font-size: 13px; font-weight: 500; color: var(--accent-ink); cursor: pointer; }
+.upload-filled { display: flex; align-items: center; gap: 12px; padding: 8px; }
+.upload-filled img { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; background: #fff; }
+
+/* Confirm details (components/confirmDialog.js) */
+.details { margin: 0 0 14px; padding: 12px; border-radius: 8px; background: var(--surface-2); font-size: 14px; }
+.details > div { display: flex; justify-content: space-between; gap: 12px; padding: 2px 0; }
+.details dt { color: var(--muted); }
+.details dd { margin: 0; text-align: right; font-weight: 500; }
+.details .total { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 8px; }
+.details .total dd { font-weight: 700; }
+.confirm-text { color: var(--muted); margin-bottom: 14px; }
+
+/* Image viewer (components/imageViewer.js) */
+.viewer { text-align: center; }
+.viewer img { max-height: 70dvh; margin: 0 auto 8px; border-radius: 8px; background: #fff; }
+.viewer form { margin-top: 8px; }
+
+/* Toast (components/toast.js) */
+.toast {
+  position: fixed; z-index: 20;
+  left: 50%; bottom: 90px;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--toast); color: #FFFFFF; font-size: 14px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s;
+}
+.toast.is-on { opacity: 1; pointer-events: auto; }
+.toast button { border: 0; background: none; color: #A8DCE7; font-weight: 600; padding: 0; }

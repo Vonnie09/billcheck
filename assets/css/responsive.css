@@ -1,0 +1,33 @@
+/* Phone layout (screens 600px wide or less) */
+
+@media (max-width: 600px) {
+  .app { padding-top: 16px; }
+
+  /* Header: app name on the first row, toggle + buttons on a full-width second row */
+  .topbar { flex-wrap: wrap; row-gap: 12px; }
+  .top-actions { width: 100%; }
+  .mode-toggle { flex: 1; min-width: 0; }
+
+  .next { padding: 16px; }
+  .next .btn { width: 100%; }
+  .next-side { width: 100%; min-width: 0; }
+  .next-due { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 12px; }
+  .next-due-lbl { grid-column: 1 / -1; }
+  .next-due-date { font-size: 18px; }
+
+  .summary { grid-template-columns: 1fr; }
+  .summary > div + div { border-left: 0; border-top: 1px solid var(--border); }
+  .summary > div { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; padding: 10px 14px; }
+  .summary-link, .summary-note { flex-basis: 100%; text-align: right; }
+
+  .tabs { gap: 18px; margin-left: -16px; margin-right: -16px; padding: 0 16px; }
+  .grid { grid-template-columns: 1fr; }
+
+  .row { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .row .btn { grid-column: 2 / -1; }
+  .trash-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .trash-row .trash-actions { grid-column: 1 / -1; }
+  .trash-row .trash-actions .btn { flex: 1; }
+
+  .modal { margin: auto 0 0; width: 100%; max-width: 100%; border-radius: 14px 14px 0 0; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+}

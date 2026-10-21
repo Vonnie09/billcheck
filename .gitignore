@@ -1,0 +1,8 @@
+# Vercel project link (created by `vercel` CLI)
+.vercel
+
+# Local editor / assistant settings
+.claude
+
+# macOS
+.DS_Store

@@ -1,0 +1,87 @@
+/* Color palette and theme tokens.
+   Palette: #A8DCE7 #101422 #FFFFFF #272B3B #BAC8D9 #1F3A5F #5AA9E6 #EAF4F4 #222831 #1A1A2E
+   Added (not in palette): status red/green, muted text #5B6478, light tints #F3F8FA / #E3F3F7 */
+
+:root {
+  --bg: #EAF4F4;
+  --surface: #FFFFFF;
+  --surface-2: #F3F8FA;
+  --border: #BAC8D9;
+  --text: #101422;
+  --muted: #5B6478;
+  --primary: #1F3A5F;
+  --on-primary: #FFFFFF;
+  --accent: #5AA9E6;
+  --accent-soft: #A8DCE7;
+  --accent-ink: #1F3A5F;
+  --next-bg: #E3F3F7;
+  --hero: #1F3A5F;
+  --hero-text: #FFFFFF;
+  --hero-muted: #BAC8D9;
+  --input: #FFFFFF;
+  --red: #C62E3A;
+  --red-soft: #FDECEC;
+  --green: #157A6B;
+  --green-soft: #DDF3EE;
+  --toast: #222831;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(16, 20, 34, .05), 0 4px 14px rgba(31, 58, 95, .07);
+  color-scheme: light;
+}
+
+/* Dark mode: follows the device unless the user picked light/dark with the button */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101422;
+    --surface: #1A1A2E;
+    --surface-2: #222831;
+    --border: #272B3B;
+    --text: #EAF4F4;
+    --muted: #BAC8D9;
+    --primary: #5AA9E6;
+    --on-primary: #101422;
+    --accent: #5AA9E6;
+    --accent-soft: #1F3A5F;
+    --accent-ink: #A8DCE7;
+    --next-bg: #1F3A5F;
+    --hero: #1F3A5F;
+    --hero-text: #FFFFFF;
+    --hero-muted: #BAC8D9;
+    --input: #222831;
+    --red: #FF7A85;
+    --red-soft: #3A1C26;
+    --red-alert: #4D1F2B;
+    --green: #5FD3B8;
+    --green-soft: #12332F;
+    --toast: #272B3B;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #101422;
+  --surface: #1A1A2E;
+  --surface-2: #222831;
+  --border: #272B3B;
+  --text: #EAF4F4;
+  --muted: #BAC8D9;
+  --primary: #5AA9E6;
+  --on-primary: #101422;
+  --accent: #5AA9E6;
+  --accent-soft: #1F3A5F;
+  --accent-ink: #A8DCE7;
+  --next-bg: #1F3A5F;
+  --hero: #1F3A5F;
+  --hero-text: #FFFFFF;
+  --hero-muted: #BAC8D9;
+  --input: #222831;
+  --red: #FF7A85;
+  --red-soft: #3A1C26;
+  --red-alert: #4D1F2B;
+  --green: #5FD3B8;
+  --green-soft: #12332F;
+  --toast: #272B3B;
+  --shadow: none;
+  color-scheme: dark;
+}
