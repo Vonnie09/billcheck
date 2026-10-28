@@ -4,6 +4,7 @@ import { $, closeOnBackdrop } from '../assets/js/utils/dom.js';
 import { toISO, today, addDays } from '../assets/js/utils/dates.js';
 import { clamp, uid, fmtMoney, fmtDate } from '../assets/js/utils/format.js';
 import { buildSchedule } from '../assets/js/utils/schedule.js';
+import { attachMoneyInput, parseMoney } from '../assets/js/utils/moneyInput.js';
 import { state, save } from '../assets/js/state.js';
 import { render, setTab } from '../assets/js/render.js';
 import { uploadFieldHTML, makeUpload } from './uploadField.js';
@@ -32,7 +33,7 @@ export function mountBillForm() {
         <div class="field-row">
           <div class="field">
             <label for="amount">Amount (${CURRENCY})</label>
-            <input id="amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required>
+            <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" required>
           </div>
           <div class="field">
             <label for="due" id="dueLabel">Due date</label>
@@ -85,6 +86,7 @@ export function mountBillForm() {
   dialog = $('#billDialog');
   form = $('#billForm');
   methodUpload = makeUpload($('#methodDrop'));
+  attachMoneyInput(form.elements.amount);
 
   dialog.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => dialog.close()));
   closeOnBackdrop(dialog);
@@ -110,7 +112,7 @@ function updatePreview() {
   const inst = f.isInstallment.checked;
   $('#instFields').hidden = !inst;
   $('#dueLabel').textContent = inst ? 'First due date' : 'Due date';
-  const total = parseFloat(f.amount.value);
+  const total = parseMoney(f.amount.value);
   if (!inst || !f.due.value || !(total > 0)) { preview.hidden = true; return; }
   const count = clamp(parseInt(f.count.value, 10) || MIN_PAYMENTS, MIN_PAYMENTS, MAX_PAYMENTS);
   const sched = buildSchedule(total, f.due.value, count, f.freq.value);
@@ -123,7 +125,7 @@ function onSubmit(e) {
   e.preventDefault();
   const f = form.elements;
   const title = f.billTitle.value.trim();
-  const total = Math.round(parseFloat(f.amount.value) * 100) / 100;
+  const total = Math.round(parseMoney(f.amount.value) * 100) / 100;
   const invalid = [];
   if (!title) invalid.push(f.billTitle);
   if (!(total > 0)) invalid.push(f.amount);
