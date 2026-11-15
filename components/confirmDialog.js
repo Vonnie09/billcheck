@@ -35,7 +35,7 @@ export function mountConfirmDialog() {
 }
 
 /** Ask the user to confirm. onOk(receiptImage) runs only if they press the OK button. */
-export function openConfirm({ title, body, ok, danger = false, upload = false, onOk }) {
+export function openConfirm({ title, body, ok, danger = false, upload = false, onOk = () => {} }) {
   ctx = { onOk };
   $('#confirmTitle').textContent = title;
   $('#confirmBody').innerHTML = body;

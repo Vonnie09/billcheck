@@ -16,6 +16,17 @@
 
 .top-actions { display: flex; align-items: center; gap: 12px; }
 
+/* "Add app to home screen" button */
+.install-btn {
+  margin-left: auto; margin-right: 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px;
+  border: 1px solid var(--accent); border-radius: 999px;
+  background: none; color: var(--accent-ink);
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+}
+.install-btn:hover { background: var(--next-bg); }
+
 /* Demo Mode / Empty State toggle */
 .mode-toggle {
   position: relative;

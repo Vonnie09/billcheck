@@ -1,4 +1,4 @@
-/* Header: app name, today's date, Demo Mode / Empty State toggle, "Reset demo" and the dark mode button */
+/* Header: app name, today's date, "Add app to home screen", Demo Mode / Empty State toggle, "Reset demo" and the dark mode button */
 import { $ } from '../assets/js/utils/dom.js';
 import { today } from '../assets/js/utils/dates.js';
 
@@ -8,6 +8,10 @@ export function mountHeader(target) {
       <h1>BillCheck</h1>
       <p class="today" id="today"></p>
     </div>
+    <button class="install-btn" id="installBtn" type="button" data-action="install">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3l3 3 3-3M10 18h4"/></svg>
+      Add app to home screen
+    </button>
     <div class="top-actions">
       <div class="mode-toggle" id="modeToggle" role="radiogroup" aria-label="Bills to show" data-mode="demo">
         <span class="mode-ink" aria-hidden="true"></span>

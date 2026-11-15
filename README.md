@@ -3,6 +3,7 @@
 A simple bill and installment tracker (originally named PayBills, which is still the folder name). This is a **demo**: it has no backend and no database, and every bill is saved in the visitor's own browser (`localStorage`). The first visit loads sample bills, and **Reset demo** brings them back.
 
 ## Features
+- **Add app to home screen**: installs BillCheck as an app (Chrome, Edge and Android install directly; Safari shows the Share → Add to Home Screen steps). Works offline once installed.
 - **Demo Mode / Empty State toggle**: Demo Mode shows sample bills; Empty State starts with no bills. Each mode saves its own bills separately.
 - **+ button**: add a bill with a title, amount, due date and payment method
 - **Payment method image**: upload a QR code, card photo or account screenshot
@@ -17,6 +18,8 @@ A simple bill and installment tracker (originally named PayBills, which is still
 ```
 PayBills/
 ├── index.html              Page layout (header slot, tabs, panels, + button). Loads the CSS and assets/js/main.js
+├── manifest.json           App name, icons and colors used when installing to the home screen
+├── sw.js                   Service worker: makes the app installable and lets it open offline
 │
 ├── config/
 │   ├── settings.js         Currency, payment methods, frequencies, tabs, storage keys
@@ -30,13 +33,15 @@ PayBills/
 │   │   ├── components.css  Styles for each component
 │   │   └── responsive.css  Phone layout
 │   ├── images/
-│   │   └── favicon.svg
+│   │   ├── favicon.svg     Browser tab icon
+│   │   └── icons/          Home screen icons (PNG 192/512, Apple 180) + source app-icon.svg
 │   └── js/
 │       ├── main.js         Entry point: builds the page, loads data, handles clicks
 │       ├── state.js        Bills + trash data, saving/loading
 │       ├── render.js       Redraws the screen, switches tabs
 │       ├── actions.js      Pay, unpay, delete, restore, reset
 │       ├── theme.js        Dark mode
+│       ├── install.js      "Add app to home screen" button and popup
 │       └── utils/          Helpers: dates, formatting, schedule, images, DOM
 │
 ├── components/             Reusable pieces of the screen

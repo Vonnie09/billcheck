@@ -6,6 +6,15 @@
   <title>BillCheck</title>
   <meta name="description" content="A simple bill and installment tracker. Demo app: data stays in your browser.">
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+
+  <!-- Installable app (see manifest.json and sw.js) -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/images/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#101422">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="BillCheck">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <script>
     // Dark mode by default; use the visitor's saved choice if they switched. Runs before paint.
     (function () {

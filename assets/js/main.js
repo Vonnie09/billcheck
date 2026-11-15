@@ -6,6 +6,7 @@ import { methodName } from './utils/format.js';
 import { state, load, save, savedMode, findBill, findTrashed } from './state.js';
 import { render, setTab, savedTab } from './render.js';
 import { initTheme, toggleTheme } from './theme.js';
+import { initInstall, askInstall } from './install.js';
 import { askPay, askUnpay, moveToTrash, restore, askDeleteForever, askEmptyTrash, askReset, switchMode } from './actions.js';
 import { mountHeader } from '../../components/header.js';
 import { mountBillForm, openBillForm } from '../../components/billForm.js';
@@ -20,6 +21,7 @@ mountConfirmDialog();
 mountOverdueDialog();
 mountImageViewer();
 initTheme();
+initInstall();
 
 /* 2. Load the last-used mode's bills and draw the screen */
 state.mode = savedMode();
@@ -32,6 +34,7 @@ render();
 const handlers = {
   'add': () => openBillForm(),
   'tab': el => setTab(el.dataset.tab),
+  'install': () => askInstall(),
   'mode': el => switchMode(el.dataset.mode),
   'reset': () => askReset(),
   'toggle-theme': () => toggleTheme(),
