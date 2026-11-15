@@ -14,16 +14,26 @@ export function savedMode() {
   catch (e) { return 'demo'; }
 }
 
-/** Load a mode's saved bills. First time: sample bills in Demo Mode, nothing in Empty State. */
-export function load(mode = state.mode) {
+/** A mode's saved { bills, trash }, or null if nothing is saved yet. */
+export function readMode(mode) {
   try {
     const raw = localStorage.getItem(dataKey(mode));
     if (raw) {
       const data = JSON.parse(raw);
       if (Array.isArray(data.bills)) return { bills: data.bills, trash: Array.isArray(data.trash) ? data.trash : [] };
     }
-  } catch (e) { /* start fresh */ }
-  return { bills: mode === 'demo' ? seed() : [], trash: [] };
+  } catch (e) { /* treat as empty */ }
+  return null;
+}
+
+/** Overwrite a mode's saved bills (used when restoring a backup). Throws if storage is full. */
+export function writeMode(mode, data) {
+  localStorage.setItem(dataKey(mode), JSON.stringify({ bills: data.bills, trash: data.trash || [] }));
+}
+
+/** Load a mode's saved bills. First time: sample bills in Demo Mode, nothing in Empty State. */
+export function load(mode = state.mode) {
+  return readMode(mode) || { bills: mode === 'demo' ? seed() : [], trash: [] };
 }
 
 /** Switch to another mode and load its bills. */

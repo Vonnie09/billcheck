@@ -32,5 +32,7 @@ export function renderHeader(mode) {
   const toggle = $('#modeToggle');
   toggle.dataset.mode = mode;
   toggle.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
+  // Turn on the sliding animation only after the first position is drawn
+  if (!toggle.classList.contains('is-ready')) requestAnimationFrame(() => requestAnimationFrame(() => toggle.classList.add('is-ready')));
   $('#resetBtn').hidden = mode !== 'demo';
 }

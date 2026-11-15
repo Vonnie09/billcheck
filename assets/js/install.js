@@ -2,16 +2,12 @@
    Chrome, Edge and Android can install directly after the confirm popup.
    Safari (iPhone/iPad/Mac) and Firefox don't allow that, so the popup shows the steps instead. */
 import { $ } from './utils/dom.js';
+import { isIOS, isSafari, isAndroid, isStandalone as isInstalled } from './utils/platform.js';
+import { userBills } from './backupStatus.js';
 import { openConfirm } from '../../components/confirmDialog.js';
 import { toast } from '../../components/toast.js';
 
 let installPrompt = null; // the browser's install offer, saved until the button is pressed
-
-const ua = navigator.userAgent;
-const isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-const isSafari = /safari/i.test(ua) && !/chrome|crios|fxios|edg|android/i.test(ua);
-const isAndroid = /android/i.test(ua);
-const isInstalled = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
 const ICON = '<img src="assets/images/icons/icon-192.png" alt="" class="install-icon">';
 const SHARE_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M12 15V3m0 0L8 7m4-4l4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
@@ -41,11 +37,15 @@ export function initInstall() {
 /** Steps for browsers that can't install from a button. */
 function manualSteps() {
   if (isIOS) {
+    // On iPhone the home-screen app gets its own, separate storage
+    const tip = userBills().length
+      ? `<p class="confirm-text"><b>Bring your bills along:</b> the app on your home screen starts empty on iPhone. Tap <b>Export backup</b> at the bottom of this page first, then <b>Import backup</b> in the app.</p>`
+      : '';
     return `<ol class="install-steps">
       <li>Tap the <b>Share</b> button ${SHARE_ICON} in Safari's toolbar.</li>
       <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
       <li>Tap <b>Add</b> in the top-right corner.</li>
-    </ol>`;
+    </ol>${tip}`;
   }
   if (isSafari) {
     return `<ol class="install-steps">

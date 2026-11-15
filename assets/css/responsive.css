@@ -1,13 +1,17 @@
-/* Phone layout (screens 600px wide or less) */
+/* Narrow screens (tablets, small laptop windows, phones) */
 
-@media (max-width: 600px) {
-  .app { padding-top: 16px; }
-
-  /* Header: app name on the first row, toggle + buttons on a full-width second row */
+@media (max-width: 800px) {
+  /* Header doesn't fit on one row (needs ~760px): app name, then toggle + buttons, then the install button */
   .topbar { flex-wrap: wrap; row-gap: 12px; }
   .top-actions { width: 100%; }
   .mode-toggle { flex: 1; min-width: 0; }
   .install-btn { order: 1; width: 100%; margin: 0; justify-content: center; } /* full-width row under the toggle */
+}
+
+/* Phone layout (screens 600px wide or less) */
+
+@media (max-width: 600px) {
+  .app { padding-top: 16px; }
 
   .next { padding: 16px; }
   .next .btn { width: 100%; }
@@ -29,6 +33,9 @@
   .trash-row { grid-template-columns: minmax(0, 1fr) auto; }
   .trash-row .trash-actions { grid-column: 1 / -1; }
   .trash-row .trash-actions .btn { flex: 1; }
+
+  .backup-actions { width: 100%; }
+  .backup-actions .btn { flex: 1; }
 
   .modal { margin: auto 0 0; width: 100%; max-width: 100%; border-radius: 14px 14px 0 0; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
 }

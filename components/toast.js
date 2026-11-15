@@ -17,11 +17,13 @@ function getEl() {
 
 const hide = () => getEl().classList.remove('is-on');
 
-export function toast(msg, { undo } = {}) {
+/** toast(msg) · toast(msg, { undo }) · toast(msg, { action: { label, fn }, duration }) */
+export function toast(msg, { undo, action, duration } = {}) {
   const box = getEl();
-  box.innerHTML = `<span>${esc(msg)}</span>${undo ? '<button type="button">Undo</button>' : ''}`;
-  if (undo) box.querySelector('button').onclick = () => { undo(); hide(); };
+  const button = undo ? { label: 'Undo', fn: undo } : action;
+  box.innerHTML = `<span>${esc(msg)}</span>${button ? `<button type="button">${esc(button.label)}</button>` : ''}`;
+  if (button) box.querySelector('button').onclick = () => { hide(); button.fn(); };
   box.classList.add('is-on');
   clearTimeout(timer);
-  timer = setTimeout(hide, 4000);
+  timer = setTimeout(hide, duration || (button ? 6000 : 4000));
 }

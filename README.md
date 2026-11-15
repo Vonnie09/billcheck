@@ -3,6 +3,8 @@
 A simple bill and installment tracker (originally named PayBills, which is still the folder name). This is a **demo**: it has no backend and no database, and every bill is saved in the visitor's own browser (`localStorage`). The first visit loads sample bills, and **Reset demo** brings them back.
 
 ## Features
+- **Export / Import backup** (bottom of the page): saves all bills, with images, to a file you can keep in Files, Google Drive or email, and restores them on any device. Includes a gentle reminder if your bills haven't been backed up in 14 days.
+- **Built for Android and iPhone**: asks the device to keep data permanently, refreshes to the newest version when you return after 30+ minutes, explains iPhone's separate Safari / home-screen storage, and avoids iPhone's zoom-on-tap.
 - **Add app to home screen**: installs BillCheck as an app (Chrome, Edge and Android install directly; Safari shows the Share → Add to Home Screen steps). Works offline once installed.
 - **Demo Mode / Empty State toggle**: Demo Mode shows sample bills; Empty State starts with no bills. Each mode saves its own bills separately.
 - **+ button**: add a bill with a title, amount, due date and payment method
@@ -42,10 +44,13 @@ PayBills/
 │       ├── actions.js      Pay, unpay, delete, restore, reset
 │       ├── theme.js        Dark mode
 │       ├── install.js      "Add app to home screen" button and popup
-│       └── utils/          Helpers: dates, formatting, schedule, images, DOM
+│       ├── backup.js       Export / Import backup and the backup reminder
+│       ├── backupStatus.js When the last backup was, and whether one is needed
+│       └── utils/          Helpers: dates, formatting, schedule, images, money input, device detection, DOM
 │
 ├── components/             Reusable pieces of the screen
-│   ├── header.js           App name, date, Reset demo, dark mode button
+│   ├── header.js           App name, date, install button, Demo/Empty toggle, Reset demo, dark mode button
+│   ├── footer.js           "Saved on this device", last backup, Export / Import backup
 │   ├── nextPayment.js      "Next payment" card at the top
 │   ├── summary.js          Overdue / Due in 30 days / Left to pay
 │   ├── billCard.js         One bill card with its installment boxes

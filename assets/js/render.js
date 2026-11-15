@@ -3,6 +3,8 @@ import { $ } from './utils/dom.js';
 import { state, unpaidQueue } from './state.js';
 import { TABS, STORAGE_KEYS } from '../../config/settings.js';
 import { renderHeader } from '../../components/header.js';
+import { renderFooter } from '../../components/footer.js';
+import { backupStatus } from './backupStatus.js';
 import { renderNextPayment } from '../../components/nextPayment.js';
 import { renderSummary } from '../../components/summary.js';
 import { refreshOverdueDialog } from '../../components/overdueDialog.js';
@@ -30,6 +32,7 @@ export function render() {
   $('#countTrash').hidden = !trashCount;
 
   refreshOverdueDialog(queue);
+  renderFooter(backupStatus());
 }
 
 export function setTab(tab) {

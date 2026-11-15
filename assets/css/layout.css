@@ -51,8 +51,8 @@
   width: calc(50% - 3px);
   border-radius: 999px;
   background: var(--primary);
-  transition: transform .25s ease;
 }
+.mode-toggle.is-ready .mode-ink { transition: transform .25s ease; } /* no slide on page load */
 .mode-toggle[data-mode="empty"] .mode-ink { transform: translateX(100%); }
 .theme-btn {
   width: 38px; height: 38px;

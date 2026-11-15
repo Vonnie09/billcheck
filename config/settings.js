@@ -9,7 +9,13 @@ export const STORAGE_KEYS = {
   mode: 'paybills.mode',
   tab: 'paybills.tab',
   theme: 'paybills.theme',
+  lastBackup: 'paybills.lastBackup',         // when the user last exported a backup
+  backupReminder: 'paybills.backupReminder', // when we last reminded them
+  appWelcome: 'paybills.appWelcome',         // shown the "import your Safari bills" tip in the iPhone app
 };
+
+// Remind the user to back up if their own bills haven't been backed up in this many days
+export const BACKUP_REMINDER_DAYS = 14;
 
 // "demo" = starts with sample bills, "empty" = starts with no bills
 export const MODES = ['demo', 'empty'];
