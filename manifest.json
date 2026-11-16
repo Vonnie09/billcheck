@@ -1,7 +1,7 @@
 {
   "name": "BillCheck",
   "short_name": "BillCheck",
-  "description": "A simple bill and installment tracker. Your bills stay on this device.",
+  "description": "A simple bill and installment tracker by Von De Asis. Your bills stay on this device.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

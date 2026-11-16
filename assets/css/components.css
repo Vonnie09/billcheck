@@ -204,7 +204,24 @@
 .backup-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
 .backup-sub.is-warn { color: var(--red); font-weight: 500; }
 .backup-actions { display: flex; gap: 8px; }
-.footer-note { margin-top: 12px; text-align: center; font-size: 12px; color: var(--muted); }
+.footer-note { margin-top: 10px; text-align: center; font-size: 12px; color: var(--muted); }
+
+/* Credit badge: "BillCheck | made by Von De Asis" */
+.credit { margin-top: 28px; display: flex; flex-direction: column; align-items: center; }
+.credit-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 7px 16px 7px 8px;
+  border-radius: 999px;
+  background: var(--hero); color: var(--hero-text);
+}
+.credit-badge img { width: 28px; height: 28px; border-radius: 50%; }
+.credit-app { font-weight: 800; font-size: 15px; letter-spacing: -.01em; }
+.credit-by {
+  display: flex; flex-direction: column;
+  padding-left: 10px; border-left: 2px solid rgba(90, 169, 230, .6);
+  font-size: 13px; font-weight: 700; color: #A8DCE7; line-height: 1.15;
+}
+.credit-by small { font-size: 10.5px; font-weight: 400; color: var(--hero-muted); }
 
 /* Image viewer (components/imageViewer.js) */
 .viewer { text-align: center; }

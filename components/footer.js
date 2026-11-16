@@ -16,7 +16,14 @@ export function mountFooter(target) {
         <input type="file" id="importFile" accept=".json,application/json" hidden>
       </div>
     </div>
-    <p class="footer-note">BillCheck · no account needed · your data never leaves your device</p>`;
+    <div class="credit">
+      <div class="credit-badge" translate="no">
+        <img src="assets/images/icons/app-icon.svg" alt="" width="28" height="28">
+        <span class="credit-app">BillCheck</span>
+        <span class="credit-by"><small>made by</small>Von De Asis</span>
+      </div>
+      <p class="footer-note">No account needed · your data never leaves your device</p>
+    </div>`;
 }
 
 /** status = backupStatus() from assets/js/backupStatus.js */
