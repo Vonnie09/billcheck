@@ -222,6 +222,48 @@
   font-size: 13px; font-weight: 700; color: #A8DCE7; line-height: 1.15;
 }
 .credit-by small { font-size: 10.5px; font-weight: 400; color: var(--hero-muted); }
+button.credit-by {
+  border-top: 0; border-right: 0; border-bottom: 0;
+  background: none; text-align: left; cursor: pointer;
+  text-decoration: underline; text-decoration-color: rgba(168, 220, 231, .45); text-underline-offset: 3px;
+}
+button.credit-by small { text-decoration: none; }
+
+/* Credit popup: frosted glass card (components/creditDialog.js) */
+.modal.credit-modal {
+  width: min(360px, calc(100vw - 32px));
+  margin: auto; /* a centered card on phones too, not a bottom sheet */
+  padding: 28px 24px 22px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 22px;
+  background: rgba(26, 26, 46, .62);
+  color: #EAF4F4;
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+[data-theme="light"] .modal.credit-modal {
+  background: rgba(255, 255, 255, .62);
+  color: #101422;
+  border-color: rgba(255, 255, 255, .7);
+  box-shadow: 0 24px 60px rgba(31, 58, 95, .25), inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+.credit-modal::backdrop { background: rgba(16, 20, 34, .35); }
+.credit-close { position: absolute; top: 10px; right: 10px; color: inherit; opacity: .75; }
+.credit-avatar {
+  width: 72px; height: 72px; margin: 0 auto 12px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5AA9E6, #1F3A5F);
+  border: 2px solid rgba(255, 255, 255, .35);
+  color: #FFFFFF; font-size: 26px; font-weight: 800; letter-spacing: .02em;
+}
+.credit-eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; opacity: .7; }
+.modal.credit-modal h2 { margin: 4px 0 6px; font-size: 24px; font-weight: 800; }
+.credit-desc { font-size: 14px; opacity: .8; margin-bottom: 18px; }
+.credit-link { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; line-height: 40px; }
+.credit-url { margin-top: 8px; font-size: 12px; opacity: .6; }
 
 /* Image viewer (components/imageViewer.js) */
 .viewer { text-align: center; }

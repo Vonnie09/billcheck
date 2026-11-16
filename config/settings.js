@@ -20,6 +20,13 @@ export const BACKUP_REMINDER_DAYS = 14;
 // "demo" = starts with sample bills, "empty" = starts with no bills
 export const MODES = ['demo', 'empty'];
 
+// Who made BillCheck (shown in the footer badge and the credit popup)
+export const CREDIT = {
+  name: 'Von De Asis',
+  initials: 'VD',
+  portfolio: 'https://portfolio-von-de-asis.vercel.app/',
+};
+
 export const CURRENCY = '₱';
 export const LOCALE = 'en-PH';
 

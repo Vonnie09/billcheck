@@ -18,6 +18,7 @@ import { mountBillForm, openBillForm } from '../../components/billForm.js';
 import { mountConfirmDialog } from '../../components/confirmDialog.js';
 import { mountOverdueDialog, openOverdueDialog } from '../../components/overdueDialog.js';
 import { mountImageViewer, viewImage } from '../../components/imageViewer.js';
+import { mountCreditDialog, openCreditDialog } from '../../components/creditDialog.js';
 import { toast } from '../../components/toast.js';
 
 /* 1. Build the page pieces */
@@ -27,6 +28,7 @@ mountBillForm();
 mountConfirmDialog();
 mountOverdueDialog();
 mountImageViewer();
+mountCreditDialog();
 initTheme();
 initInstall();
 initBackup();
@@ -60,6 +62,7 @@ const handlers = {
   'mode': el => switchMode(el.dataset.mode),
   'reset': () => askReset(),
   'toggle-theme': () => toggleTheme(),
+  'credit': () => openCreditDialog(),
   'export-backup': () => exportBackup(),
   'import-backup': () => chooseBackupFile(),
   'view-overdue': () => openOverdueDialog(),

@@ -20,7 +20,7 @@ export function mountFooter(target) {
       <div class="credit-badge" translate="no">
         <img src="assets/images/icons/app-icon.svg" alt="" width="28" height="28">
         <span class="credit-app">BillCheck</span>
-        <span class="credit-by"><small>made by</small>Von De Asis</span>
+        <button class="credit-by" type="button" data-action="credit" aria-haspopup="dialog" aria-label="Made by Von De Asis. Open portfolio card"><small>made by</small>Von De Asis</button>
       </div>
       <p class="footer-note">No account needed · your data never leaves your device</p>
     </div>`;
