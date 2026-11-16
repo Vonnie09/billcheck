@@ -31,6 +31,10 @@
   font-size: 13px; font-weight: 600; white-space: nowrap;
 }
 
+/* Installed app: always your own bills, so no Demo / Empty toggle and no "Reset demo" */
+.is-installed .mode-toggle,
+.is-installed #resetBtn { display: none !important; }
+
 /* Demo Mode / Empty State toggle */
 .mode-toggle {
   position: relative;

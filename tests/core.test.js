@@ -8,6 +8,12 @@ import { formatMoneyInput, parseMoney } from '../assets/js/utils/moneyInput.js';
 import { statusText } from '../assets/js/utils/format.js';
 import { cleanBill, cleanBills } from '../assets/js/utils/cleanBill.js';
 import { seed } from '../config/demoData.js';
+import { startMode } from '../assets/js/state.js';
+
+test('installed app always opens your own bills; the website keeps its remembered mode', () => {
+  assert.equal(startMode(true), 'empty');
+  assert.equal(startMode(false), 'demo'); // nothing remembered (no browser storage here) → Demo Mode
+});
 
 test('installments add up to the total, to the cent', () => {
   for (const [total, count] of [[1000, 3], [42000, 6], [0.05, 2], [12345678.9, 48], [549, 7]]) {

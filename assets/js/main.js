@@ -5,7 +5,7 @@ import { $ } from './utils/dom.js';
 import { toISO, today } from './utils/dates.js';
 import { methodName } from './utils/format.js';
 import { isIOS, isFirefox, isStandalone } from './utils/platform.js';
-import { state, load, save, savedMode, findBill, findTrashed } from './state.js';
+import { state, load, save, startMode, findBill, findTrashed } from './state.js';
 import { render, setTab, savedTab } from './render.js';
 import { initTheme, toggleTheme } from './theme.js';
 import { initInstall, askInstall } from './install.js';
@@ -33,8 +33,11 @@ initTheme();
 initInstall();
 initBackup();
 
-/* 2. Load the last-used mode's bills and draw the screen */
-state.mode = savedMode();
+/* 2. Load the bills and draw the screen.
+   Installed app: always your own bills, and the Demo / Empty toggle is hidden (see index.html). */
+const installed = isStandalone();
+document.documentElement.classList.toggle('is-installed', installed);
+state.mode = startMode(installed);
 Object.assign(state, load());
 save();
 setTab(savedTab()); // also draws the screen

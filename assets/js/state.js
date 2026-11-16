@@ -32,6 +32,12 @@ export function writeMode(mode, data) {
   localStorage.setItem(dataKey(mode), JSON.stringify({ bills: data.bills, trash: data.trash || [] }));
 }
 
+/** Which bills to open with. The installed app is for real use, so it always shows your own bills
+    ("empty" = Empty State) and doesn't change what the website in the browser remembers. */
+export function startMode(installed) {
+  return installed ? 'empty' : savedMode();
+}
+
 /** Load a mode's saved bills. First time: sample bills in Demo Mode, nothing in Empty State. */
 export function load(mode = state.mode) {
   return readMode(mode) || { bills: mode === 'demo' ? seed() : [], trash: [] };

@@ -7,6 +7,9 @@
   .mode-toggle { flex: 1; min-width: 0; }
   .install-btn { order: 1; width: 100%; margin: 0; justify-content: center; } /* full-width row under the toggle */
 
+  /* Installed app (no toggle): the dark mode button sits on the same row as the app name */
+  .is-installed .top-actions { width: auto; }
+
   /* Next 3 payments: stacked */
   .next-set[data-count] { grid-template-columns: 1fr; }
 }
