@@ -3,15 +3,18 @@ import { $ } from '../assets/js/utils/dom.js';
 import { daysUntil } from '../assets/js/utils/dates.js';
 import { paymentRowHTML } from '../components/paymentRow.js';
 
+// Day ranges (not calendar weeks/months), matching the summary's "Due in 30 days"
 const GROUPS = [
   { title: 'Overdue', red: true, test: d => d < 0 },
   { title: 'Today', test: d => d === 0 },
-  { title: 'This week', test: d => d > 0 && d <= 7 },
-  { title: 'This month', test: d => d > 7 && d <= 31 },
-  { title: 'Later', test: d => d > 31 },
+  { title: 'Next 7 days', test: d => d > 0 && d <= 7 },
+  { title: 'Next 30 days', test: d => d > 7 && d <= 30 },
+  { title: 'Later', test: d => d > 30 },
 ];
 
-export function renderNextBill(queue) {
+/** Returns the tab's count; draws the panel only when `draw` (its tab is open). */
+export function renderNextBill(queue, draw = true) {
+  if (!draw) return queue.length;
   const target = $('#timeline');
   if (!queue.length) {
     target.innerHTML = `<div class="empty">Nothing due. Every bill is paid.</div>`;

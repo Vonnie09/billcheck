@@ -46,7 +46,8 @@ PayBills/
 │       ├── install.js      "Add app to home screen" button and popup
 │       ├── backup.js       Export / Import backup and the backup reminder
 │       ├── backupStatus.js When the last backup was, and whether one is needed
-│       └── utils/          Helpers: dates, formatting, schedule, images, money input, device detection, DOM
+│       └── utils/          Helpers: dates, formatting, schedule, images, money input, device detection, DOM,
+│                           and cleanBill.js (checks every bill from storage or a backup file)
 │
 ├── components/             Reusable pieces of the screen
 │   ├── header.js           App name, date, install button, Demo/Empty toggle, Reset demo, dark mode button
@@ -63,6 +64,9 @@ PayBills/
 │   ├── uploadField.js      Image upload box
 │   └── toast.js            Bottom message with Undo
 │
+├── tests/
+│   └── core.test.js        Tests for money splits, dates, amounts and backup safety (node --test)
+│
 └── pages/                  One file per tab
     ├── allBills.js
     ├── nextBill.js
@@ -77,6 +81,13 @@ It is plain HTML, CSS and JavaScript modules with no build step. Because it uses
 
 ```bash
 npx serve .
+```
+
+## Tests
+The money, date and backup-safety logic has tests in `tests/`. Run them from this folder (needs Node.js, nothing to install):
+
+```bash
+node --test
 ```
 
 ## Deploy to Vercel

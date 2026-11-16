@@ -68,7 +68,6 @@
   border: 0; background: none; padding: 0; margin-top: 2px;
   font-size: 12.5px; font-weight: 600; color: var(--accent-ink);
 }
-.summary-link:hover { text-decoration: underline; }
 .summary-note { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 
 /* Bill card (components/billCard.js) */
@@ -111,8 +110,7 @@
   background: var(--surface);
   text-align: left; font-size: 12px; line-height: 1.35;
 }
-.part:hover { border-color: var(--accent); }
-.part-n { color: var(--muted); }
+.part-n { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; } /* "10/48 ✓" stays on one line */
 .part-date { font-weight: 500; }
 .part.is-next { border-color: var(--accent); background: var(--next-bg); }
 .part.is-overdue { border-color: var(--red); background: var(--red-soft); color: var(--red); }
@@ -140,7 +138,7 @@
 .row-date { text-align: center; line-height: 1.15; }
 .row-date b { display: block; font-size: 18px; }
 .row-date span { font-size: 11px; color: var(--muted); text-transform: uppercase; }
-.row-title { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-title { font-weight: 500; overflow-wrap: anywhere; } /* wrap long names instead of cutting them off */
 .row-sub { font-size: 12px; color: var(--muted); }
 .row-right { text-align: right; }
 .row-amt { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -160,6 +158,7 @@
   border: 1px solid var(--border); border-radius: 14px;
   background: var(--surface); color: var(--text);
   box-shadow: 0 20px 50px rgba(16, 20, 34, .25);
+  overscroll-behavior: contain; /* scrolling inside a popup doesn't scroll the page behind it */
 }
 .modal--sm { width: min(400px, calc(100vw - 32px)); }
 .modal::backdrop { background: rgba(16, 20, 34, .55); }
@@ -227,3 +226,9 @@
 }
 .toast.is-on { opacity: 1; pointer-events: auto; }
 .toast button { border: 0; background: none; color: #A8DCE7; font-weight: 600; padding: 0; }
+
+/* Hover effects only on devices with a mouse (on phones they stay stuck after a tap) */
+@media (hover: hover) and (pointer: fine) {
+  .summary-link:hover { text-decoration: underline; }
+  .part:hover { border-color: var(--accent); }
+}

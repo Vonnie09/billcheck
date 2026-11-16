@@ -17,6 +17,7 @@ export function mountImageViewer() {
 export function viewImage(src, caption) {
   if (!src) return;
   $('#viewerImg').src = src;
+  $('#viewerImg').alt = caption; // the full-size image is real content, so describe it
   $('#viewerCap').textContent = caption;
   dialog.showModal();
 }

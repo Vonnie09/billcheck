@@ -29,36 +29,7 @@
   color-scheme: light;
 }
 
-/* Dark mode: follows the device unless the user picked light/dark with the button */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #101422;
-    --surface: #1A1A2E;
-    --surface-2: #222831;
-    --border: #272B3B;
-    --text: #EAF4F4;
-    --muted: #BAC8D9;
-    --primary: #5AA9E6;
-    --on-primary: #101422;
-    --accent: #5AA9E6;
-    --accent-soft: #1F3A5F;
-    --accent-ink: #A8DCE7;
-    --next-bg: #1F3A5F;
-    --hero: #1F3A5F;
-    --hero-text: #FFFFFF;
-    --hero-muted: #BAC8D9;
-    --input: #222831;
-    --red: #FF7A85;
-    --red-soft: #3A1C26;
-    --red-alert: #4D1F2B;
-    --green: #5FD3B8;
-    --green-soft: #12332F;
-    --toast: #272B3B;
-    --shadow: none;
-    color-scheme: dark;
-  }
-}
-
+/* Dark mode (the default). index.html always sets data-theme, so there is no "follow the device" rule. */
 :root[data-theme="dark"] {
   --bg: #101422;
   --surface: #1A1A2E;

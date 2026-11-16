@@ -5,7 +5,7 @@ import { today } from '../assets/js/utils/dates.js';
 export function mountHeader(target) {
   target.innerHTML = `
     <div>
-      <h1>BillCheck</h1>
+      <h1 translate="no">BillCheck</h1>
       <p class="today" id="today"></p>
     </div>
     <button class="install-btn" id="installBtn" type="button" data-action="install">
@@ -31,7 +31,10 @@ export function renderHeader(mode) {
   $('#today').textContent = today().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   const toggle = $('#modeToggle');
   toggle.dataset.mode = mode;
-  toggle.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
+  toggle.querySelectorAll('button').forEach(b => {
+    b.setAttribute('aria-checked', String(b.dataset.mode === mode));
+    b.tabIndex = b.dataset.mode === mode ? 0 : -1; // arrow keys move between the two (see main.js)
+  });
   // Turn on the sliding animation only after the first position is drawn
   if (!toggle.classList.contains('is-ready')) requestAnimationFrame(() => requestAnimationFrame(() => toggle.classList.add('is-ready')));
   $('#resetBtn').hidden = mode !== 'demo';

@@ -6,7 +6,7 @@ import { clamp, uid, fmtMoney, fmtDate } from '../assets/js/utils/format.js';
 import { buildSchedule } from '../assets/js/utils/schedule.js';
 import { attachMoneyInput, parseMoney } from '../assets/js/utils/moneyInput.js';
 import { state, save } from '../assets/js/state.js';
-import { render, setTab } from '../assets/js/render.js';
+import { setTab } from '../assets/js/render.js';
 import { uploadFieldHTML, makeUpload } from './uploadField.js';
 import { toast } from './toast.js';
 
@@ -27,17 +27,20 @@ export function mountBillForm() {
 
         <div class="field">
           <label for="billTitle">Title</label>
-          <input id="billTitle" name="billTitle" type="text" maxlength="60" placeholder="e.g. Electricity" required autocomplete="off">
+          <input id="billTitle" name="billTitle" type="text" maxlength="60" placeholder="Electricity, rent, laptop…" required autocomplete="off" aria-describedby="billTitleError">
+          <p class="field-error" id="billTitleError" hidden>Enter a name for this bill.</p>
         </div>
 
         <div class="field-row">
           <div class="field">
             <label for="amount">Amount (${CURRENCY})</label>
-            <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" required>
+            <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="1,500.00" required aria-describedby="amountError">
+            <p class="field-error" id="amountError" hidden>Enter an amount above ${CURRENCY}0.</p>
           </div>
           <div class="field">
             <label for="due" id="dueLabel">Due date</label>
-            <input id="due" name="due" type="date" required>
+            <input id="due" name="due" type="date" required aria-describedby="dueError">
+            <p class="field-error" id="dueError" hidden>Pick a due date.</p>
           </div>
         </div>
 
@@ -90,14 +93,14 @@ export function mountBillForm() {
 
   dialog.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => dialog.close()));
   closeOnBackdrop(dialog);
-  form.addEventListener('input', e => { e.target.classList?.remove('is-invalid'); updatePreview(); });
+  form.addEventListener('input', e => { if (e.target.name) setError(e.target, false); updatePreview(); });
   form.addEventListener('change', updatePreview);
   form.addEventListener('submit', onSubmit);
 }
 
 export function openBillForm() {
   form.reset();
-  form.querySelectorAll('.is-invalid').forEach(x => x.classList.remove('is-invalid'));
+  [form.elements.billTitle, form.elements.amount, form.elements.due].forEach(x => setError(x, false));
   form.elements.due.value = toISO(addDays(today(), 7));
   methodUpload.set(null);
   updatePreview();
@@ -121,18 +124,25 @@ function updatePreview() {
   preview.textContent = `${count} payments of ${fmtMoney(last.amount)}, ${FREQ[f.freq.value]}. Last payment on ${fmtDate(last.due, { month: 'short', day: 'numeric', year: 'numeric' })}.`;
 }
 
+/** Show or hide a field's red outline and its message underneath (read out by screen readers). */
+function setError(input, on) {
+  const msg = $(`#${input.id}Error`);
+  if (!msg) return;
+  input.classList.toggle('is-invalid', on);
+  input.setAttribute('aria-invalid', String(on));
+  msg.hidden = !on;
+}
+
 function onSubmit(e) {
   e.preventDefault();
   const f = form.elements;
   const title = f.billTitle.value.trim();
   const total = Math.round(parseMoney(f.amount.value) * 100) / 100;
-  const invalid = [];
-  if (!title) invalid.push(f.billTitle);
-  if (!(total > 0)) invalid.push(f.amount);
-  if (!f.due.value) invalid.push(f.due);
-  if (invalid.length) {
-    invalid.forEach(x => x.classList.add('is-invalid'));
-    invalid[0].focus();
+  const checks = [[f.billTitle, !title], [f.amount, !(total > 0)], [f.due, !f.due.value]];
+  checks.forEach(([input, bad]) => setError(input, bad));
+  const firstBad = checks.find(([, bad]) => bad);
+  if (firstBad) {
+    firstBad[0].focus();
     return;
   }
   const inst = f.isInstallment.checked;
@@ -148,8 +158,8 @@ function onSubmit(e) {
   state.bills.push(bill);
   if (!save()) { state.bills.pop(); return; }
   dialog.close();
-  setTab('all');
-  render();
-  $(`#billGrid [data-card="${bill.id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  toast(`"${title}" added`);
+  setTab('all'); // also redraws
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  $(`#billGrid [data-card="${bill.id}"]`)?.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' });
+  toast(`“${title}” added`);
 }

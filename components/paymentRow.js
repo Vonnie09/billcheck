@@ -17,6 +17,6 @@ export function paymentRowHTML({ bill, ins, idx }) {
         <div class="row-amt">${fmtMoney(ins.amount)}</div>
         <span class="pill ${pillClass(d)}">${statusText(d)}</span>
       </div>
-      <button class="btn btn-secondary btn-sm" type="button" data-action="pay" data-bill="${bill.id}" data-idx="${idx}">Pay</button>
+      <button class="btn btn-secondary btn-sm" type="button" data-action="pay" data-bill="${esc(bill.id)}" data-idx="${idx}">Pay</button>
     </li>`;
 }

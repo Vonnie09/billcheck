@@ -3,6 +3,28 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 
+html {
+  -webkit-tap-highlight-color: transparent; /* no gray flash when tapping on phones */
+  -webkit-text-size-adjust: 100%;          /* iPhone: don't enlarge text in landscape */
+}
+
+/* Controls: no double-tap delay, and long-pressing doesn't select their text (bill text stays selectable) */
+button, [role="tab"], [role="radio"], .check, .upload-empty {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Press feedback the moment a finger lands, not when it lifts */
+.btn, .icon-btn, .part, .fab, .theme-btn, .install-btn, .thumb { transition: transform 100ms ease-out; }
+.btn:active, .icon-btn:active, .part:active, .fab:active, .theme-btn:active, .install-btn:active, .thumb:active { transform: scale(.97); }
+
+/* Less motion for people who turn animations off in their phone or computer settings */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -32,26 +54,21 @@ img { display: block; max-width: 100%; }
   font-weight: 600; white-space: nowrap;
 }
 .btn-primary { background: var(--primary); color: var(--on-primary); }
-.btn-primary:hover { filter: brightness(1.1); }
 .btn-danger { background: var(--red); color: #fff; }
 .btn-secondary { background: var(--surface); border-color: var(--border); color: var(--text); }
-.btn-secondary:hover { background: var(--surface-2); border-color: var(--accent); }
 .btn-text-danger { background: none; color: var(--red); }
-.btn-text-danger:hover { background: var(--red-soft); }
 .btn-sm { height: 32px; padding: 0 12px; font-size: 13px; }
 
 .link-btn {
   border: 0; background: none; padding: 4px 0;
   color: var(--muted); font-size: 13px;
 }
-.link-btn:hover { color: var(--text); text-decoration: underline; }
 
 .icon-btn {
   width: 32px; height: 32px; flex: none;
   display: grid; place-items: center;
   border: 0; border-radius: 8px; background: none; color: var(--muted);
 }
-.icon-btn:hover { background: var(--surface-2); color: var(--text); }
 
 /* Form fields */
 .field { margin-bottom: 14px; min-width: 0; }
@@ -66,8 +83,18 @@ img { display: block; max-width: 100%; }
 }
 .field input:focus, .field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .field input.is-invalid { border-color: var(--red); }
+.field-error { margin-top: 4px; font-size: 13px; font-weight: 500; color: var(--red); }
 
 .check { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; cursor: pointer; }
 .check input { width: 16px; height: 16px; accent-color: var(--primary); }
 
 .hint { font-size: 13px; color: var(--muted); margin: -4px 0 14px; }
+
+/* Hover effects only on devices with a mouse (on phones they stay stuck after a tap) */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-secondary:hover { background: var(--surface-2); border-color: var(--accent); }
+  .btn-text-danger:hover { background: var(--red-soft); }
+  .link-btn:hover { color: var(--text); text-decoration: underline; }
+  .icon-btn:hover { background: var(--surface-2); color: var(--text); }
+}

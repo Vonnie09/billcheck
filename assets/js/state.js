@@ -3,8 +3,9 @@
 import { STORAGE_KEYS } from '../../config/settings.js';
 import { seed } from '../../config/demoData.js';
 import { toast } from '../../components/toast.js';
+import { cleanBills } from './utils/cleanBill.js';
 
-export const state = { bills: [], trash: [], tab: 'all', mode: 'demo' };
+export const state = { bills: [], trash: [], mode: 'demo' };
 
 const dataKey = mode => mode === 'empty' ? STORAGE_KEYS.emptyData : STORAGE_KEYS.data;
 
@@ -14,13 +15,13 @@ export function savedMode() {
   catch (e) { return 'demo'; }
 }
 
-/** A mode's saved { bills, trash }, or null if nothing is saved yet. */
+/** A mode's saved { bills, trash } (checked by cleanBills), or null if nothing is saved yet. */
 export function readMode(mode) {
   try {
     const raw = localStorage.getItem(dataKey(mode));
     if (raw) {
       const data = JSON.parse(raw);
-      if (Array.isArray(data.bills)) return { bills: data.bills, trash: Array.isArray(data.trash) ? data.trash : [] };
+      if (Array.isArray(data.bills)) return { bills: cleanBills(data.bills), trash: cleanBills(data.trash) };
     }
   } catch (e) { /* treat as empty */ }
   return null;

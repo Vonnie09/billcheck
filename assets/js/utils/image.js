@@ -1,7 +1,7 @@
 /* Image upload helper */
 
-/** Read an image file and shrink it (max 900px) so it fits in browser storage. Returns a data URL. */
-export function readImage(file, max = 900) {
+/** Read an image file and shrink it (max 700px, 70% quality: receipts stay readable and about twice as many fit) so it fits in browser storage. Returns a data URL. */
+export function readImage(file, max = 700) {
   return new Promise((resolve, reject) => {
     if (!file || !file.type.startsWith('image/')) return reject(new Error('Not an image'));
     const reader = new FileReader();
@@ -18,7 +18,7 @@ export function readImage(file, max = 900) {
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL('image/jpeg', 0.8));
+        resolve(canvas.toDataURL('image/jpeg', 0.7));
       };
       img.src = reader.result;
     };

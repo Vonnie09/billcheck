@@ -2,7 +2,7 @@
 import { state, save, isDone, setMode } from './state.js';
 import { render } from './render.js';
 import { toISO, today } from './utils/dates.js';
-import { fmtLong, plural } from './utils/format.js';
+import { esc, fmtLong, plural } from './utils/format.js';
 import { seed } from '../../config/demoData.js';
 import { openConfirm, paymentDetails } from '../../components/confirmDialog.js';
 import { toast } from '../../components/toast.js';
@@ -31,7 +31,7 @@ export function askPay(bill, idx) {
 export function askUnpay(bill, idx) {
   const ins = bill.installments[idx];
   const receipt = ins.receipt
-    ? `<div><dt>Receipt</dt><dd><button class="thumb" type="button" data-action="view-receipt" data-bill="${bill.id}" data-idx="${idx}" aria-label="View receipt"><img src="${ins.receipt}" alt=""></button></dd></div>`
+    ? `<div><dt>Receipt</dt><dd><button class="thumb" type="button" data-action="view-receipt" data-bill="${esc(bill.id)}" data-idx="${idx}" aria-label="View receipt"><img src="${esc(ins.receipt)}" alt="" width="28" height="28"></button></dd></div>`
     : '';
   openConfirm({
     title: 'Mark as unpaid?',
@@ -53,7 +53,7 @@ export function moveToTrash(bill) {
   state.trash.push(bill);
   if (!save()) { restore(bill, true); return; }
   render();
-  toast(`"${bill.title}" moved to Trash`, { undo: () => restore(bill, true) });
+  toast(`“${bill.title}” moved to Trash`, { undo: () => restore(bill, true) });
 }
 
 export function restore(bill, silent = false) {
@@ -61,12 +61,12 @@ export function restore(bill, silent = false) {
   delete bill.deletedAt;
   state.bills.push(bill);
   save(); render();
-  if (!silent) toast(`"${bill.title}" restored`);
+  if (!silent) toast(`“${bill.title}” restored`);
 }
 
 export function askDeleteForever(bill) {
   openConfirm({
-    title: `Delete "${bill.title}" forever?`,
+    title: `Delete “${bill.title}” forever?`,
     body: `<p class="confirm-text">This can't be undone.</p>`,
     ok: 'Delete forever',
     danger: true,

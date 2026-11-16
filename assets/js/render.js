@@ -1,4 +1,5 @@
-/* Redraws the whole screen from `state`, and switches tabs. */
+/* Redraws the screen from `state`, and switches tabs.
+   Only the open tab is drawn (the others just update their count), so taps stay fast with many bills. */
 import { $ } from './utils/dom.js';
 import { state, unpaidQueue } from './state.js';
 import { TABS, STORAGE_KEYS } from '../../config/settings.js';
@@ -14,6 +15,7 @@ import { renderOngoingBills } from '../../pages/ongoingBills.js';
 import { renderDoneBills } from '../../pages/doneBills.js';
 import { renderTrash } from '../../pages/trash.js';
 
+let openTab = 'all';
 const setCount = (sel, n) => { $(sel).textContent = n; };
 
 export function render() {
@@ -22,12 +24,12 @@ export function render() {
   renderNextPayment($('#hero'), queue, state.bills.length > 0);
   renderSummary($('#summary'));
 
-  // Each page draws its tab panel and returns the number for its tab badge
-  setCount('#countAll', renderAllBills());
-  setCount('#countNext', renderNextBill(queue));
-  setCount('#countOngoing', renderOngoingBills());
-  setCount('#countDone', renderDoneBills());
-  const trashCount = renderTrash();
+  // Each page returns the number for its tab badge, and draws its panel only when that tab is open
+  setCount('#countAll', renderAllBills(openTab === 'all'));
+  setCount('#countNext', renderNextBill(queue, openTab === 'next'));
+  setCount('#countOngoing', renderOngoingBills(openTab === 'ongoing'));
+  setCount('#countDone', renderDoneBills(openTab === 'done'));
+  const trashCount = renderTrash(openTab === 'trash');
   setCount('#countTrash', trashCount);
   $('#countTrash').hidden = !trashCount;
 
@@ -36,11 +38,16 @@ export function render() {
 }
 
 export function setTab(tab) {
-  state.tab = tab;
-  document.querySelectorAll('#tabs .tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.tab === tab)));
+  openTab = tab;
+  document.querySelectorAll('#tabs .tab').forEach(t => {
+    const selected = t.dataset.tab === tab;
+    t.setAttribute('aria-selected', String(selected));
+    t.tabIndex = selected ? 0 : -1; // arrow keys move between tabs (see main.js)
+  });
   TABS.forEach(t => { $(`#panel-${t}`).hidden = t !== tab; });
   $(`#tab-${tab}`).scrollIntoView({ block: 'nearest', inline: 'nearest' });
   try { localStorage.setItem(STORAGE_KEYS.tab, tab); } catch (e) { /* ignore */ }
+  render();
 }
 
 /** The tab the user had open last time. */

@@ -32,7 +32,7 @@ export function renderNextPayment(target, queue, hasBills) {
           <span class="next-due-date">${fmtLong(ins.due)}</span>
           <span class="pill ${pillClass(d)}">${statusText(d)}</span>
         </div>
-        <button class="btn btn-primary" type="button" data-action="pay" data-bill="${bill.id}" data-idx="${idx}">Mark as paid</button>
+        <button class="btn btn-primary" type="button" data-action="pay" data-bill="${esc(bill.id)}" data-idx="${idx}">Mark as paid</button>
       </div>
     </div>`;
 }

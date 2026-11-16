@@ -16,7 +16,12 @@ export const fmtLong = iso => {
   return fmtDate(iso, { weekday: 'short', month: 'short', day: 'numeric', ...(sameYear ? {} : { year: 'numeric' }) });
 };
 
-/** "2 days late", "Due today", "In 5 days" */
-export const statusText = d => d < 0 ? `${plural(-d, 'day')} late` : d === 0 ? 'Due today' : d === 1 ? 'Due tomorrow' : `In ${d} days`;
+/** How far away a number of days is: "5 days", then "3 months" past 60 days, then "2 years" past a year. */
+const span = days => days <= 60 ? plural(days, 'day')
+  : days < 365 ? plural(Math.round(days / 30.4), 'month')
+  : plural(Math.round(days / 365), 'year');
+
+/** "2 days late", "Due today", "In 5 days", "In 3 months", "1 year late" */
+export const statusText = d => d < 0 ? `${span(-d)} late` : d === 0 ? 'Due today' : d === 1 ? 'Due tomorrow' : `In ${span(d)}`;
 export const pillClass = d => d < 0 ? 'is-overdue' : d <= 3 ? 'is-soon' : '';
 export const methodName = m => METHODS[m] || 'Other';

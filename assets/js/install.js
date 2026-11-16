@@ -9,7 +9,7 @@ import { toast } from '../../components/toast.js';
 
 let installPrompt = null; // the browser's install offer, saved until the button is pressed
 
-const ICON = '<img src="assets/images/icons/icon-192.png" alt="" class="install-icon">';
+const ICON = '<img src="assets/images/icons/icon-192.png" alt="" class="install-icon" width="56" height="56">';
 const SHARE_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M12 15V3m0 0L8 7m4-4l4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
 
 /** Hide the button once the app is installed (or when opened as the app). */

@@ -3,8 +3,9 @@ import { $ } from '../assets/js/utils/dom.js';
 import { state, isDone } from '../assets/js/state.js';
 import { renderBillGrid } from '../components/billGrid.js';
 
-export function renderDoneBills() {
+/** Returns the tab's count; draws the panel only when `draw` (its tab is open). */
+export function renderDoneBills(draw = true) {
   const bills = state.bills.filter(isDone);
-  renderBillGrid($('#doneGrid'), bills, 'No finished bills yet. Bills move here once every payment is made.');
+  if (draw) renderBillGrid($('#doneGrid'), bills, 'No finished bills yet. Bills move here once every payment is made.');
   return bills.length;
 }

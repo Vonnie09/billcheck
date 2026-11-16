@@ -35,8 +35,7 @@ initBackup();
 state.mode = savedMode();
 Object.assign(state, load());
 save();
-setTab(savedTab());
-render();
+setTab(savedTab()); // also draws the screen
 
 /* 3. Keep the bills safe on this device */
 // Ask the browser not to clear BillCheck's storage when the device runs low on space.
@@ -82,6 +81,18 @@ document.addEventListener('click', e => {
   const trashed = el.dataset.trash ? findTrashed(el.dataset.trash) : null;
   if ((el.dataset.bill && !bill) || (el.dataset.trash && !trashed)) return;
   handler(el, bill, trashed);
+});
+
+// Keyboard: arrow keys move between the tabs, and between Demo Mode / Empty State
+document.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  const current = e.target.closest?.('[role="tab"], [role="radio"]');
+  if (!current) return;
+  const items = [...current.parentElement.querySelectorAll('[role="tab"], [role="radio"]')];
+  const next = items[(items.indexOf(current) + (e.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length];
+  e.preventDefault();
+  next.click();
+  next.focus();
 });
 
 /* 5. Coming back to the app */

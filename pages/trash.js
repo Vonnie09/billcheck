@@ -15,13 +15,15 @@ function trashRowHTML(b) {
       </div>
       <div class="row-amt">${fmtMoney(b.total)}</div>
       <div class="trash-actions">
-        <button class="btn btn-secondary btn-sm" type="button" data-action="restore" data-trash="${b.id}">Restore</button>
-        <button class="btn btn-text-danger btn-sm" type="button" data-action="delete-forever" data-trash="${b.id}" aria-label="Delete ${esc(b.title)} forever">Delete forever</button>
+        <button class="btn btn-secondary btn-sm" type="button" data-action="restore" data-trash="${esc(b.id)}">Restore</button>
+        <button class="btn btn-text-danger btn-sm" type="button" data-action="delete-forever" data-trash="${esc(b.id)}" aria-label="Delete ${esc(b.title)} forever">Delete forever</button>
       </div>
     </li>`;
 }
 
-export function renderTrash() {
+/** Returns the tab's count; draws the panel only when `draw` (its tab is open). */
+export function renderTrash(draw = true) {
+  if (!draw) return state.trash.length;
   const target = $('#trashList');
   if (!state.trash.length) {
     target.innerHTML = `<div class="empty">Trash is empty.<br>Deleted bills show up here so you can restore them.</div>`;

@@ -4,6 +4,9 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 120px;
+  /* Sideways iPhone: keep content clear of the notch */
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
 }
 
 /* Header */
@@ -25,7 +28,6 @@
   background: none; color: var(--accent-ink);
   font-size: 13px; font-weight: 600; white-space: nowrap;
 }
-.install-btn:hover { background: var(--next-bg); }
 
 /* Demo Mode / Empty State toggle */
 .mode-toggle {
@@ -44,7 +46,6 @@
   color: var(--muted);
   transition: color .2s;
 }
-.mode-toggle button:hover { color: var(--text); }
 .mode-toggle button[aria-checked="true"] { color: var(--on-primary); }
 .mode-ink {
   position: absolute; top: 3px; bottom: 3px; left: 3px;
@@ -60,7 +61,6 @@
   border: 1px solid var(--border); border-radius: 50%;
   background: var(--surface); color: var(--text);
 }
-.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
 .theme-btn .icon-sun { display: none; }
 .is-dark .theme-btn .icon-sun { display: block; }
 .is-dark .theme-btn .icon-moon { display: none; }
@@ -84,7 +84,6 @@
   border-bottom: 2px solid transparent;
   color: var(--muted); font-weight: 500;
 }
-.tab:hover { color: var(--text); }
 .tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--primary); }
 .tab:focus-visible { outline-offset: -2px; }
 .tab--trash { margin-left: auto; padding-left: 8px; padding-right: 8px; }
@@ -112,11 +111,19 @@
 /* Floating + button */
 .fab {
   position: fixed; z-index: 10;
-  right: 20px; bottom: max(20px, env(safe-area-inset-bottom));
+  right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom));
   width: 56px; height: 56px;
   display: grid; place-items: center;
   border: 0; border-radius: 50%;
   background: var(--primary); color: var(--on-primary);
   box-shadow: 0 6px 18px rgba(31, 58, 95, .35);
 }
-.fab:hover { filter: brightness(1.1); }
+
+/* Hover effects only on devices with a mouse (on phones they stay stuck after a tap) */
+@media (hover: hover) and (pointer: fine) {
+  .install-btn:hover { background: var(--next-bg); }
+  .mode-toggle button:hover { color: var(--text); }
+  .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tab:hover { color: var(--text); }
+  .fab:hover { filter: brightness(1.1); }
+}

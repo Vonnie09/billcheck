@@ -13,7 +13,7 @@ function installmentHTML(bill, ins, i, n, nextIdx) {
   const label = ins.paid
     ? `Payment ${i + 1} paid on ${fmtDate(ins.paidAt)}. Click to undo.`
     : `Payment ${i + 1} of ${n}, ${fmtMoney(ins.amount)}, due ${fmtLong(ins.due)}. Click to mark as paid.`;
-  const attrs = `type="button" data-action="${action}" data-bill="${bill.id}" data-idx="${i}" title="${esc(label)}" aria-label="${esc(bill.title)}: ${esc(label)}"`;
+  const attrs = `type="button" data-action="${action}" data-bill="${esc(bill.id)}" data-idx="${i}" title="${esc(label)}" aria-label="${esc(bill.title)}: ${esc(label)}"`;
 
   if (n === 1) {
     const right = ins.paid
@@ -22,7 +22,7 @@ function installmentHTML(bill, ins, i, n, nextIdx) {
     return `<button class="part part--wide ${cls}" ${attrs}><span>Due ${fmtLong(ins.due)}</span>${right}</button>`;
   }
   return `<button class="part ${cls}" ${attrs}>
-    <span class="part-n">${i + 1}/${n}${ins.paid ? ' ✓' : ''}</span>
+    <span class="part-n">${i + 1}/${n}${ins.paid ? ' ✓' : ''}</span>
     <span class="part-date">${fmtDate(ins.due)}</span>
   </button>`;
 }
@@ -38,17 +38,17 @@ export function billCardHTML(b) {
   const colsNarrow = n <= 4 ? n : n <= 6 || n === 9 ? 3 : 4;
   const plan = n > 1 ? `${n} × ${fmtMoney(b.installments[n - 1].amount)} ${FREQ[b.freq] || FREQ.monthly}` : 'One-time payment';
   const thumb = b.methodImg
-    ? `<button class="thumb" type="button" data-action="view-method" data-bill="${b.id}" aria-label="View payment method image"><img src="${b.methodImg}" alt=""></button>`
+    ? `<button class="thumb" type="button" data-action="view-method" data-bill="${esc(b.id)}" aria-label="View payment method image"><img src="${esc(b.methodImg)}" alt="" width="28" height="28" loading="lazy" decoding="async"></button>`
     : '';
 
   return `
-    <article class="card bill${done ? ' is-done' : ''}" data-card="${b.id}">
+    <article class="card bill${done ? ' is-done' : ''}" data-card="${esc(b.id)}">
       <div class="bill-head">
         <div>
           <h3 class="bill-title">${esc(b.title)}</h3>
           <p class="bill-amount">${fmtMoney(b.total)}</p>
         </div>
-        <button class="icon-btn" type="button" data-action="delete" data-bill="${b.id}" aria-label="Move ${esc(b.title)} to trash" title="Move to trash">${TRASH_ICON}</button>
+        <button class="icon-btn" type="button" data-action="delete" data-bill="${esc(b.id)}" aria-label="Move ${esc(b.title)} to trash" title="Move to trash">${TRASH_ICON}</button>
       </div>
       <p class="bill-plan">${plan}</p>
       <div class="bill-meta"><span>${methodName(b.method)}</span>${thumb}</div>
