@@ -6,6 +6,9 @@
   .top-actions { width: 100%; }
   .mode-toggle { flex: 1; min-width: 0; }
   .install-btn { order: 1; width: 100%; margin: 0; justify-content: center; } /* full-width row under the toggle */
+
+  /* Next 3 payments: stacked */
+  .next-set[data-count] { grid-template-columns: 1fr; }
 }
 
 /* Phone layout (screens 600px wide or less) */
